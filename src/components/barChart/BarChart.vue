@@ -71,10 +71,15 @@ const init = () => {
     .data(props.data)
     .join('rect')
     .attr('x', d => xScale(String(xValue(d))) as number)
-    .attr('y', d => yScale(yValue(d)))
-    .attr('width', xScale.bandwidth())
-    .attr('height', d => containerHeight.value - yScale(yValue(d)))
+    .attr('y', containerHeight.value)
     .attr('fill', (_, i) => color(String(i)))
+    .attr('width', xScale.bandwidth())
+    .attr('height', 0)
+    .transition()
+    .delay((_, i) => 500 * i)
+    .duration(1000)
+    .attr('height', d => containerHeight.value - yScale(yValue(d)))
+    .attr('y', d => yScale(yValue(d)))
 }
 
 onMounted(() => {
